@@ -17,8 +17,10 @@ class VarredorCitacoes(scrapy.Spider):
       #Response
       def parse(self, response):
             #aqui onde deve processar o que é retornado da response
-            for elemento in response.xpath():
+            for elemento in response.xpath("//div[@class='quoteText']"):
                   yield{
-                        
+                        'frase' : elemento.xpath(".//div[@class='quoteText']/text()[1]").get(),
+                        'autor' : elemento.xpath(".//span[@class='authorOrTitle']/text()").get(), 
+                        'tags' : elemento.xpath(".//div[@class='greyText smallText left']").getall()
                   }
             
